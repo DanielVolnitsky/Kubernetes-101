@@ -10,6 +10,11 @@ kubectl apply -f greeting/k8s/configmap.yml -f greeting/k8s/deployment.yml -f gr
 kubectl apply -f greeting/k8s/db/postgres-secret.yml -f greeting/k8s/db/postgres-configmap-init.yml -f greeting/k8s/db/postgres-statefulset.yml -f greeting/k8s/db/postgres-service.yml
 ```
 
+### Delete all the greeting service resources
+```
+kubectl delete deployment --all && kubectl delete statefulset --all
+```
+
 ### Additional
 #### Connect to the PostgreSQL DB 
 ```

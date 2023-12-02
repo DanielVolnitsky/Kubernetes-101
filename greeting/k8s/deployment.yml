@@ -25,3 +25,21 @@ spec:
                 configMapKeyRef:
                   name: greeting-environment-variables
                   key: env
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            failureThreshold: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            failureThreshold: 2
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            failureThreshold: 3
+            periodSeconds: 3
