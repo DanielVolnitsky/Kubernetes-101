@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: greeting-service
-          image: waytodanny/k8s-101-greeting-service
+          image: waytodanny/k8s-101-greeting-service:v0.0.1-db-v1
           ports:
             - containerPort: 8081
           env:
@@ -25,6 +25,18 @@ spec:
                 configMapKeyRef:
                   name: greeting-environment-variables
                   key: env
+            - name: DB-HOST
+              value: greeting-postgres
+            - name: DB-USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: DB-PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
           startupProbe:
             httpGet:
               path: /actuator/health

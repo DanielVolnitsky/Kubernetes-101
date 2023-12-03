@@ -8,7 +8,7 @@ import java.util.Optional;
 @RestController
 public class GreetingController {
 
-    @GetMapping("/")
+    @GetMapping("/greeting")
     public String greeting() {
         var currentEnv = Optional.ofNullable(System.getenv("ENVIRONMENT")).orElse("unknown");
         return String.format("Hello from the greeting service on %s environment!", currentEnv);

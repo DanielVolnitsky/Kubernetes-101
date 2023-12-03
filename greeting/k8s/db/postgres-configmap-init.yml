@@ -6,4 +6,4 @@ data:
   init-script: |
     CREATE DATABASE greeting;
     \c greeting;
-    CREATE TABLE greeting (id serial PRIMARY KEY, text VARCHAR UNIQUE NOT NULL);
+    CREATE TABLE IF NOT EXISTS song (id serial PRIMARY KEY, name VARCHAR NOT NULL);

@@ -1,2 +1,11 @@
 server:
   port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB-HOST}/greeting
+    username: ${DB-USER}
+    password: ${DB-PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
