@@ -12,11 +12,9 @@ public class Song {
 
     private String name;
 
-    public Song() {
-    }
+    private String genre;
 
-    public Song(String name) {
-        this.name = name;
+    public Song() {
     }
 
     public Long getId() {
@@ -33,5 +31,13 @@ public class Song {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

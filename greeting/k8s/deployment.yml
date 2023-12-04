@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: greeting-service
-          image: waytodanny/k8s-101-greeting-service:v0.0.1-db-v1
+          image: waytodanny/k8s-101-greeting-service:v0.0.1-db-v2
           ports:
             - containerPort: 8081
           env:
