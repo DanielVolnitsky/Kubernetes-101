@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: greeting-environment-variables
 data:
-  env: "default"
+  env: {{ template "env" . }}
