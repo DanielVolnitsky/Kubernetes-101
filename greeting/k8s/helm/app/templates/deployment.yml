@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: greeting
+  labels:
+    app: greeting
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: greeting
+  template:
+    metadata:
+      labels:
+        app: greeting
+    spec:
+      containers:
+        - name: greeting-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8081
+          env:
+            - name: ENVIRONMENT
+              valueFrom:
+                configMapKeyRef:
+                  name: greeting-environment-variables
+                  key: env
+            - name: DB-HOST
+              value: greeting-postgres
+            - name: DB-USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: DB-PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            failureThreshold: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            failureThreshold: 2
+            periodSeconds: 1
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            failureThreshold: 3
+            periodSeconds: 3

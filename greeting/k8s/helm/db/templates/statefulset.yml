@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: greeting-db
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: postgres
+          image: postgres:latest
+          volumeMounts:
+            - name: postgres-db-disk
+              mountPath: /data
+            - name: init-scripts-configmap
+              mountPath: /docker-entrypoint-initdb.d/
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: password
+            - name: PGDATA
+              value: /data/pgdata
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: [ "pg_isready" ]
+            periodSeconds: 10
+            initialDelaySeconds: 10
+
+      volumes:
+        - name: init-scripts-configmap
+          configMap:
+            name: postgres-init-scripts
+            items:
+              - key: init-script
+                path: init-script.sql
+
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-db-disk
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi

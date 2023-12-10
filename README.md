@@ -7,7 +7,7 @@ kubectl apply -f greeting/k8s/configmap.yml -f greeting/k8s/deployment.yml -f gr
 
 ### Start up greeting service DB
 ```
-kubectl apply -f greeting/k8s/db/postgres-secret.yml -f greeting/k8s/db/postgres-configmap-init.yml -f greeting/k8s/db/postgres-statefulset.yml -f greeting/k8s/db/postgres-service.yml
+kubectl apply -f greeting/k8s/manifest/db/postgres-secret.yml -f greeting/k8s/manifest/db/postgres-configmap-init.yml -f greeting/k8s/manifest/db/postgres-statefulset.yml -f greeting/k8s/manifest/db/postgres-service.yml
 ```
 
 ### Delete all the greeting service resources
