@@ -1,21 +1,27 @@
 # k8s-learning
 
-### Start up greeting service
+## Greeting Service
+
+### Start up
+
+#### Via Helm
+```
+helm install greeting db
+```
+```
+helm install greeting app
+```
+
+#### Via direct manifest files
+```
+kubectl apply -f greeting/k8s/manifest/db/postgres-secret.yml -f greeting/k8s/manifest/db/postgres-configmap-init.yml -f greeting/k8s/manifest/db/postgres-statefulset.yml -f greeting/k8s/manifest/db/postgres-service.yml
+```
 ```
 kubectl apply -f greeting/k8s/configmap.yml -f greeting/k8s/deployment.yml -f greeting/k8s/service.yml
 ```
 
-### Start up greeting service DB
-```
-kubectl apply -f greeting/k8s/manifest/db/postgres-secret.yml -f greeting/k8s/manifest/db/postgres-configmap-init.yml -f greeting/k8s/manifest/db/postgres-statefulset.yml -f greeting/k8s/manifest/db/postgres-service.yml
-```
-
-### Delete all the greeting service resources
-```
-kubectl delete deployment --all && kubectl delete statefulset --all
-```
-
 ### Additional
+
 #### Connect to the PostgreSQL DB 
 ```
 psql -U <username> -h <hostname> -d <database>
