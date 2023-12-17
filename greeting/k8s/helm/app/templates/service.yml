@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: greeting
 spec:
-  type: NodePort
+  # Exposes the Service on a cluster-internal IP.
+  # Choosing this value makes the Service only reachable from within the cluster.
+  type: ClusterIP
+  ports:
+    - name: app
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
   selector:
     app: greeting
-  ports:
-    - protocol: TCP
-      #the port number which is exposed by the Kubernetes service. External services, or services within the same cluster, will communicate with this service on this port number.
-      port: 8081
-      #the port number on the pods where the actual service is running and requests will be sent. It is the port of your application on the actual pods targeted by the service.
-      targetPort: 8081
-      nodePort: 30001
